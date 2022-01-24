@@ -13,8 +13,7 @@ def blog_index(request):
 
 def blog_category(request, category):
     posts = Post.objects.filter(
-        categories__name__contains=category
-    ).order_by(
+        categories__name__contains=category).order_by(
         '-created_on'
     )
     context = {
@@ -26,6 +25,7 @@ def blog_category(request, category):
 
 def blog_detail(request, pk):
     post = Post.objects.get(pk=pk)
+
     form = CommentForm()
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -36,6 +36,7 @@ def blog_detail(request, pk):
                 post=post
             )
             comment.save()
+
     comments = Comment.objects.filter(post=post)
     context = {
         "post": post,
